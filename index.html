@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Work - Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="logo-area">
+            <img src="Image/logo.jpg" alt="Speed Work Logo" class="main-logo">
+        </div>
+
+        <div class="glass-card">
+            <h2>আপনি কি হিসেবে যোগ দিতে চান?</h2>
+            
+            <div class="role-selection">
+                <div class="role-card" onclick="selectRole('Worker')" id="workerCard">
+                    <i class="fa-solid fa-tools icon-blue"></i>
+                    <span>Worker</span>
+                    <div class="check-mark"><i class="fa-solid fa-circle-check"></i></div>
+                </div>
+
+                <div class="role-card" onclick="selectRole('User')" id="userCard">
+                    <i class="fa-solid fa-user icon-orange"></i>
+                    <span>User</span>
+                    <div class="check-mark"><i class="fa-solid fa-circle-check"></i></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-signature"></i>
+                <input type="text" id="userName" placeholder="আপনার নাম লিখুন..." autocomplete="off">
+            </div>
+
+            <div class="policy-area">
+                <input type="checkbox" id="policyCheck">
+                <label for="policyCheck">আমি <a href="policy.html" target="_blank">পলিসি</a> মেনে চলছি</label>
+            </div>
+
+            <button class="next-btn" onclick="goToNextPage()">Next <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

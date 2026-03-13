@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Work - Google Sign-In</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: linear-gradient(rgba(0, 0, 50, 0.7), rgba(0, 0, 50, 0.7)), 
+                        url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop');
+            background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+        .glass-card {
+            background: white; padding: 40px; border-radius: 25px;
+            width: 90%; max-width: 400px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        h2 { color: #003366; margin-bottom: 10px; }
+        p { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+
+        /* Google Button Style */
+        .google-btn {
+            width: 100%; padding: 12px; background: white;
+            border: 1px solid #dadce0; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-size: 1rem; font-weight: bold; color: #3c4043;
+            cursor: pointer; transition: 0.3s;
+        }
+        .google-btn:hover { background: #f8f9fa; border-color: #d2e3fc; }
+        .google-btn img { width: 24px; }
+
+        .loader {
+            display: none; margin: 20px auto;
+            border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+            border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div class="glass-card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" width="50" style="margin-bottom: 15px;">
+    <h2>সহজে লগইন করুন</h2>
+    <p>আপনার জিমেইল অ্যাকাউন্ট সিলেক্ট করে এগিয়ে যান</p>
+
+    <button class="google-btn" onclick="signInWithGoogle()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+        Google দিয়ে শুরু করুন
+    </button>
+
+    <div class="loader" id="loader"></div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqCisTDbCxj4uBvHN4zGn9pgMqdN3awAU",
+        authDomain: "speed-work-4227e.firebaseapp.com",
+        projectId: "speed-work-4227e",
+        storageBucket: "speed-work-4227e.firebasestorage.app",
+        messagingSenderId: "240048394545",
+        appId: "1:240048394545:web:83cc366b430f646b316010"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    window.signInWithGoogle = async () => {
+        document.getElementById('loader').style.display = "block";
+        
+        try {
+            // signInWithPopup করলে মোবাইলে জিমেইল আইডি চুজ করার পপ-আপ আসবে
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            // ডাটাবেসে ইউজার ডাটা সেভ বা আপডেট করা
+            await setDoc(doc(db, "Users", user.uid), {
+                name: user.displayName,
+                email: user.email,
+                photo: user.photoURL,
+                uid: user.uid,
+                role: "User"
+            }, { merge: true });
+
+            Swal.fire({
+                title: 'স্বাগতম!',
+                text: `${user.displayName}, আপনার লগইন সফল হয়েছে।`,
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "page3.html";
+            });
+
+        } catch (error) {
+            document.getElementById('loader').style.display = "none";
+            console.error(error);
+            Swal.fire('Error', 'লগইন বাতিল করা হয়েছে বা সমস্যা হয়েছে।', 'error');
+        }
+    };
+</script>
+
+</body>
+</html>
