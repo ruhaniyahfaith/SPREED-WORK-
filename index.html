@@ -10,98 +10,84 @@
     
     <style>
         :root { --primary: #0056b3; --secondary: #ff8c00; --bg: #f4f7f9; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         
-        body { background-color: var(--bg); color: #333; overflow-x: hidden; }
+        body { background-color: var(--bg); color: #333; }
 
-        /* Animation Classes */
         .fade-in { animation: fadeIn 0.8s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Top Bar */
         .top-bar {
             width: 100%; padding: 15px 5%; display: flex; justify-content: space-between; 
             align-items: center; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky; top: 0; z-index: 1000;
         }
-        .brand-logo { height: 50px; cursor: pointer; transition: 0.3s; }
-        .brand-logo:hover { transform: scale(1.05); }
+        .brand-logo { height: 50px; cursor: pointer; }
 
         .lang-select {
-            padding: 10px 15px; border-radius: 8px; border: 2px solid var(--primary);
-            font-weight: bold; color: var(--primary); cursor: pointer; outline: none;
+            padding: 8px 12px; border-radius: 8px; border: 2px solid var(--primary);
+            font-weight: bold; color: var(--primary); outline: none;
         }
 
-        /* Main Container */
-        .container { width: 95%; max-width: 600px; margin: 40px auto; text-align: center; }
+        .container { width: 95%; max-width: 550px; margin: 40px auto; text-align: center; }
 
-        .logo-main {
-            font-size: 4rem; color: var(--primary); margin-bottom: 15px;
-            text-shadow: 2px 4px 10px rgba(0,86,179,0.2);
-        }
-
-        h1 { color: #003366; font-size: 2.5rem; margin-bottom: 10px; }
-        .subtitle { color: #666; font-size: 1.2rem; margin-bottom: 40px; }
+        h1 { color: #003366; font-size: 2.3rem; margin-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 35px; }
 
         /* Role Cards */
         .role-card {
-            background: white; padding: 35px 25px; border-radius: 20px; margin-bottom: 25px;
-            cursor: pointer; border: 2px solid transparent; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06); display: flex; align-items: center; 
-            text-align: left; position: relative; overflow: hidden;
+            background: white; padding: 25px; border-radius: 20px; margin-bottom: 20px;
+            cursor: pointer; border: 2px solid transparent; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; align-items: center; 
         }
-
-        .role-card:hover { border-color: var(--secondary); transform: scale(1.02); }
+        .role-card:hover { border-color: var(--secondary); transform: translateY(-3px); }
         .role-card.active { border-color: var(--secondary); background: #fffaf0; }
 
         .role-icon {
-            width: 80px; height: 80px; border-radius: 50%; background: #e6f0fa;
+            width: 70px; height: 70px; border-radius: 50%; background: #e6f0fa;
             color: var(--primary); display: flex; justify-content: center; align-items: center;
-            font-size: 2.5rem; margin-right: 20px; transition: 0.3s;
+            font-size: 2rem; margin-right: 20px;
         }
         .role-card.active .role-icon { background: var(--secondary); color: white; }
 
-        .role-info { flex-grow: 1; }
-        .role-info h3 { font-size: 1.5rem; color: #003366; margin-bottom: 5px; }
-        .role-info p { color: #777; font-size: 1rem; }
+        .role-info { flex-grow: 1; text-align: left; }
+        .role-info h3 { font-size: 1.3rem; color: #003366; }
 
-        /* Arrow Icon */
-        .arrow-icon { font-size: 1.5rem; color: #ccc; transition: 0.3s; }
+        .arrow-icon { font-size: 1.4rem; color: #ddd; transition: 0.3s; }
         .role-card:hover .arrow-icon { color: var(--secondary); transform: translateX(5px); }
 
         /* Google Section */
-        .divider { margin: 30px 0; display: flex; align-items: center; color: #aaa; font-weight: bold; }
+        .divider { margin: 30px 0; display: flex; align-items: center; color: #aaa; }
         .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #ddd; margin: 0 15px; }
 
+        .google-section { margin-top: 20px; }
         .google-btn {
-            width: 100%; padding: 16px; background: white; border: 2px solid #dadce0;
+            width: 100%; padding: 15px; background: white; border: 1px solid #dadce0;
             border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            gap: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+            gap: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
-        .google-btn:hover { background: #f8f9fa; border-color: #0056b3; }
-        .google-btn img { width: 25px; }
-
-        /* Policy Checkbox */
-        .policy-area {
-            margin: 30px 0; display: flex; align-items: flex-start; gap: 12px;
-            text-align: left; background: #fff; padding: 20px; border-radius: 12px;
+        
+        /* Connected State Style */
+        .connected-box {
+            background: #e8f0fe; border-radius: 12px; padding: 15px;
+            border: 1px dashed var(--primary); display: none;
         }
-        .policy-area input { width: 22px; height: 22px; cursor: pointer; accent-color: var(--primary); }
-        .policy-area label { font-size: 1rem; color: #555; cursor: pointer; }
-        .policy-area a { color: var(--primary); font-weight: bold; text-decoration: none; }
+        .user-name { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
+        .success-tag { color: #28a745; font-size: 0.9rem; font-weight: bold; display: block; }
 
+        /* Policy & Continue */
+        .policy-area { margin: 25px 0; display: flex; align-items: flex-start; gap: 10px; text-align: left; }
         .continue-btn {
-            width: 100%; padding: 20px; background: var(--primary); color: white;
-            border: none; border-radius: 15px; font-size: 1.3rem; font-weight: bold;
-            cursor: pointer; display: none; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,86,179,0.3);
+            width: 100%; padding: 18px; background: var(--primary); color: white;
+            border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; display: none; box-shadow: 0 8px 15px rgba(0,86,179,0.2);
         }
-        .continue-btn:hover { background: #003366; transform: translateY(-2px); }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <img src="image/logo.jpg" alt="Logo" class="brand-logo">
+        <img src="image/logo.jpg" alt="Speed Work" class="brand-logo">
         <select class="lang-select" id="langSelector" onchange="changeLanguage()">
             <option value="en">English</option>
             <option value="bn">বাংলা</option>
@@ -110,15 +96,13 @@
     </div>
 
     <div class="container fade-in">
-        <div class="logo-main"><i class="fa-solid fa-bolt-lightning"></i></div>
         <h1 id="welcomeText">Speed Work</h1>
-        <p class="subtitle" id="subtitleText">Get your tasks done instantly</p>
+        <p class="subtitle" id="subtitleText">Smart solution for your needs</p>
 
         <div class="role-card" onclick="selectRole('User', this)">
             <div class="role-icon"><i class="fa-solid fa-user-tie"></i></div>
             <div class="role-info">
                 <h3 id="userTitle">I need a Service</h3>
-                <p id="userDesc">Find professionals for your help</p>
             </div>
             <div class="arrow-icon"><i class="fa-solid fa-circle-arrow-right"></i></div>
         </div>
@@ -127,21 +111,31 @@
             <div class="role-icon"><i class="fa-solid fa-tools"></i></div>
             <div class="role-info">
                 <h3 id="workerTitle">I want to Work</h3>
-                <p id="workerDesc">Earn money by providing services</p>
             </div>
             <div class="arrow-icon"><i class="fa-solid fa-circle-arrow-right"></i></div>
         </div>
 
         <div class="divider">OR</div>
-        <button class="google-btn" onclick="googleLogin()">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
-            <span id="googleBtnText">Quick Login with Google</span>
-        </button>
+
+        <div class="google-section">
+            <button class="google-btn" id="googleBtn" onclick="googleLogin()">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+                <span id="googleBtnText">Login with Google</span>
+            </button>
+            
+            <div class="connected-box" id="connectedBox">
+                <i class="fa-solid fa-circle-check" style="color: #28a745; font-size: 1.5rem;"></i>
+                <div id="userDataDisplay">
+                    <span class="user-name" id="displayUserName">User Name</span>
+                    <span class="success-tag" id="successMsg">Connected Successfully!</span>
+                </div>
+            </div>
+        </div>
 
         <div class="policy-area" id="policyBox" style="display: none;">
             <input type="checkbox" id="policyCheck">
             <label for="policyCheck" id="policyLabel">
-                I agree to the <a href="policy.html" target="_blank">Privacy Policy</a> & <a href="terms.html" target="_blank">Terms</a>.
+                I agree to the <a href="policy.html">Privacy Policy</a>.
             </label>
         </div>
 
@@ -149,7 +143,6 @@
     </div>
 
     <script type="module">
-        // Firebase Integration
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
@@ -169,9 +162,9 @@
         const provider = new GoogleAuthProvider();
 
         const translations = {
-            en: { welcome: "WELCOME TO SPEED WORK", subtitle: "Choose your role", userTitle: "I need a Service", workerTitle: "I want to Work", google: "Quick Login with Google", btn: "Continue", err: "Accept Policy First!" },
-            bn: { welcome: "স্বাগতম", subtitle: "আপনার ভূমিকা বেছে নিন", userTitle: "আমার সার্ভিস প্রয়োজন", workerTitle: "আমি কাজ করতে চাই", google: "গুগল দিয়ে লগইন", btn: "এগিয়ে যান", err: "আগে পলিসি মানুন!" },
-            hi: { welcome: "स्वागत है", subtitle: "अपनी भूमिका चुनें", userTitle: "मुझे सर्विस चाहिए", workerTitle: "मैं काम करना चाहता हूँ", google: "गूगल के साथ लॉगिन", btn: "आगे बढ़ें", err: "पहले पॉलिसी स्वीकार करें!" }
+            en: { welcome: "Speed Work", subtitle: "Smart solution for your needs", userTitle: "I need a Service", workerTitle: "I want to Work", google: "Login with Google", success: "Connected Successfully!", btn: "Continue" },
+            bn: { welcome: "স্পিড ওয়ার্ক", subtitle: "আপনার প্রয়োজনের স্মার্ট সমাধান", userTitle: "আমার সার্ভিস প্রয়োজন", workerTitle: "আমি কাজ করতে চাই", google: "গুগল দিয়ে লগইন", success: "সফলভাবে কানেক্ট হয়েছে!", btn: "এগিয়ে যান" },
+            hi: { welcome: "स्पीड वर्क", subtitle: "आपकी जरूरतों का स्मार्ट समाधान", userTitle: "मुझे सर्विस चाहिए", workerTitle: "मैं काम करना चाहता हूँ", google: "गूगल से लॉगिन करें", success: "सफलतापूर्वक कनेक्ट हुआ!", btn: "आगे बढ़ें" }
         };
 
         window.changeLanguage = () => {
@@ -182,12 +175,12 @@
             document.getElementById('userTitle').innerText = translations[l].userTitle;
             document.getElementById('workerTitle').innerText = translations[l].workerTitle;
             document.getElementById('googleBtnText').innerText = translations[l].google;
+            document.getElementById('successMsg').innerText = translations[l].success;
             document.getElementById('continueBtn').innerText = translations[l].btn;
         };
 
-        let selectedRole = "";
         window.selectRole = (role, el) => {
-            selectedRole = role;
+            window.selectedRole = role;
             document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('policyBox').style.display = "flex";
@@ -198,18 +191,34 @@
             try {
                 const res = await signInWithPopup(auth, provider);
                 const user = res.user;
-                await setDoc(doc(db, "Users", user.uid), { name: user.displayName, email: user.email, photo: user.photoURL, lastLogin: Date.now() }, { merge: true });
-                localStorage.setItem('userEmail', user.email);
-                Swal.fire('Success!', 'Logged in with Google', 'success').then(() => window.location.href = "page3.html");
-            } catch (e) { console.error(e); }
+                
+                // UI Update: বাটন হাইড করে ইউজারের নাম দেখানো
+                document.getElementById('googleBtn').style.display = "none";
+                document.getElementById('connectedBox').style.display = "flex";
+                document.getElementById('connectedBox').style.justifyContent = "center";
+                document.getElementById('connectedBox').style.alignItems = "center";
+                document.getElementById('connectedBox').style.gap = "15px";
+                document.getElementById('displayUserName').innerText = user.displayName;
+
+                // ডাটাবেসে সেভ
+                await setDoc(doc(db, "Users", user.uid), {
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                    connected: true
+                }, { merge: true });
+
+                localStorage.setItem('isLoggedIn', 'true');
+            } catch (e) {
+                console.error(e);
+            }
         };
 
         window.nextPage = () => {
             if (!document.getElementById('policyCheck').checked) {
-                const l = localStorage.getItem('lang') || 'en';
-                return Swal.fire('Error', translations[l].err, 'error');
+                return Swal.fire('Error', 'Please accept Privacy Policy', 'error');
             }
-            localStorage.setItem('role', selectedRole);
+            localStorage.setItem('role', window.selectedRole);
             window.location.href = "page2.html";
         };
 
